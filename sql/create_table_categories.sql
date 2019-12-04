@@ -1,0 +1,1 @@
+create table categories (cid int auto_increment, primary key(cid), name varchar(255), date datetime);

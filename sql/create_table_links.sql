@@ -1,0 +1,1 @@
+create table links (lid int auto_increment, primary key(lid), url varchar(255), title varchar(255), cid int, date datetime);
