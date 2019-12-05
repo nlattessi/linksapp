@@ -1,0 +1,20 @@
+{
+  "name": "nlattessi/no-framework",
+  "description": "Linksapp with no framework",
+  "type": "project",
+  "require": {
+    "php-di/php-di": "^6.0",
+    "relay/relay": "^2.0",
+    "zendframework/zend-diactoros": "^2.2",
+    "middlewares/fast-route": "^2.0",
+    "middlewares/request-handler": "^2.0",
+    "narrowspark/http-emitter": "^1.0",
+    "league/plates": "^3.3",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  }
+}
