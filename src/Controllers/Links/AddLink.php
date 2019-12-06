@@ -4,32 +4,30 @@ declare(strict_types=1);
 
 namespace App\Controllers\Links;
 
+use App\Controllers\BaseController;
 use App\Models\Link;
 use App\Models\LinkRepository;
-use League\Plates\Engine;
+use App\Traits\RedirectTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
 
 class AddLink
 {
+    use RedirectTrait;
+
     /** @var ResponseInterface */
     private $response;
-
-    /** @var Engine */
-    private $templateEngine;
 
     /** @var LinkRepository */
     private $linkRepository;
 
     public function __construct(
         ResponseInterface $response,
-        Engine $templateEngine,
         LinkRepository $linkRepository
     )
     {
         $this->response = $response;
-        $this->templateEngine = $templateEngine;
         $this->linkRepository = $linkRepository;
     }
 
@@ -46,8 +44,6 @@ class AddLink
 
         $this->linkRepository->add($link);
 
-        return $this->response
-            ->withHeader('Location', '/')
-            ->withStatus(302);
+        return $this->redirectToHome($this->response);
     }
 }

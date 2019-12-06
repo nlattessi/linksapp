@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace App\Controllers\Links;
 
 use App\Models\CategoryRepository;
+use App\Traits\TemplateEngineTrait;
 use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class ShowFormAddLink
 {
+    use TemplateEngineTrait;
+
     /** @var ResponseInterface */
     private $response;
 
@@ -30,17 +34,17 @@ class ShowFormAddLink
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function __invoke(): ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
-        $categories = $this->categoryRepository->getAll();
+        $data = [
+            'categories' => $this->categoryRepository->getAll(),
+        ];
 
-        $response = $this->response->withHeader('Content-Type', 'text/html');
-        $response->getBody()->write(
-            $this->templateEngine->render('agregar-link', [
-                'categories' => $categories,
-            ])
+        return $this->renderHtml(
+            $this->response,
+            $this->templateEngine,
+            'add-link',
+            $data
         );
-
-        return $response;
     }
 }

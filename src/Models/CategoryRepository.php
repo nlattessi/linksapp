@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-final class CategoryRepository extends Repository
+final class CategoryRepository extends BaseRepository
 {
     public function getAll(): array
     {

@@ -34,10 +34,16 @@ final class Link
         $this->created = new DateTimeImmutable('now', new DateTimeZone('UTC'));
     }
 
+    /**
+     * @param array $row
+     * @return Link
+     * @throws Exception
+     */
     public static function fromDb(array $row): Link
     {
         $link = new Link();
 
+        $link->lid = $row['lid'];
         $link->url = $row['url'];
         $link->title = $row['title'];
         $link->category = $row['category'];

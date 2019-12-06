@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-final class LinkRepository extends Repository
+final class LinkRepository extends BaseRepository
 {
     /**
      * @param string $name

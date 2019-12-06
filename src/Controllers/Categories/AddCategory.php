@@ -4,32 +4,30 @@ declare(strict_types=1);
 
 namespace App\Controllers\Categories;
 
+use App\Controllers\BaseController;
 use App\Models\Category;
 use App\Models\CategoryRepository;
-use League\Plates\Engine;
+use App\Traits\RedirectTrait;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
 
 class AddCategory
 {
+    use RedirectTrait;
+
     /** @var ResponseInterface */
     private $response;
-
-    /** @var Engine */
-    private $templateEngine;
 
     /** @var CategoryRepository */
     private $categoryRepository;
 
     public function __construct(
         ResponseInterface $response,
-        Engine $templateEngine,
         CategoryRepository $categoryRepository
     )
     {
         $this->response = $response;
-        $this->templateEngine = $templateEngine;
         $this->categoryRepository = $categoryRepository;
     }
 
@@ -46,8 +44,6 @@ class AddCategory
 
         $this->categoryRepository->add($category);
 
-        return $this->response
-            ->withHeader('Location', '/')
-            ->withStatus(302);
+        return $this->redirectToHome($this->response);
     }
 }

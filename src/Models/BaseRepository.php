@@ -6,7 +6,7 @@ namespace App\Models;
 
 use PDO;
 
-abstract class Repository
+abstract class BaseRepository
 {
     /**
      * @var PDO

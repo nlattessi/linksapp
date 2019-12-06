@@ -16,7 +16,7 @@
             <?php foreach ($categories as $category): ?>
 
                 <a class="list-group-item list-group-item-action <?= ($category->getName() === $selectedCategoryName) ? ' active' : '' ?>"
-                   href="/?category=<?= urlencode($category->getName()); ?>">
+                   href="/?category=<?= $this->e(urlencode($category->getName())); ?>">
                     <?= $this->e($category->getName()) ?>
                 </a>
 

@@ -4,33 +4,42 @@ declare(strict_types=1);
 
 namespace App\Controllers\Categories;
 
+use App\Models\CategoryRepository;
+use App\Traits\TemplateEngineTrait;
 use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class ShowFormAddCategory
 {
+    use TemplateEngineTrait;
+
     /** @var ResponseInterface */
     private $response;
 
     /** @var Engine */
     private $templateEngine;
 
+    /** @var CategoryRepository */
+    private $categoryRepository;
+
     public function __construct(
         ResponseInterface $response,
-        Engine $templateEngine
+        Engine $templateEngine,
+        CategoryRepository $categoryRepository
     )
     {
         $this->response = $response;
         $this->templateEngine = $templateEngine;
+        $this->categoryRepository = $categoryRepository;
     }
 
-    public function __invoke(): ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
-        $response = $this->response->withHeader('Content-Type', 'text/html');
-        $response->getBody()->write(
-            $this->templateEngine->render('agregar-categoria')
+        return $this->renderHtml(
+            $this->response,
+            $this->templateEngine,
+            'add-category'
         );
-
-        return $response;
     }
 }

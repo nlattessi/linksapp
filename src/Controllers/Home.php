@@ -6,12 +6,15 @@ namespace App\Controllers;
 
 use App\Models\CategoryRepository;
 use App\Models\LinkRepository;
+use App\Traits\TemplateEngineTrait;
 use League\Plates\Engine;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Home
 {
+    use TemplateEngineTrait;
+
     /** @var ResponseInterface */
     private $response;
 
@@ -37,6 +40,7 @@ class Home
         $this->linkRepository = $linkRepository;
     }
 
+
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $queryParams = (array)$request->getQueryParams();
@@ -49,15 +53,17 @@ class Home
             $this->linkRepository->getAllWhereCategoryNameIs($selectedCategoryName) :
             $this->linkRepository->getAll();
 
-        $response = $this->response->withHeader('Content-Type', 'text/html');
-        $response->getBody()->write(
-            $this->templateEngine->render('home', [
-                'categories' => $categories,
-                'links' => $links,
-                'selectedCategoryName' => $selectedCategoryName,
-            ])
-        );
+        $data = [
+            'categories' => $categories,
+            'links' => $links,
+            'selectedCategoryName' => $selectedCategoryName,
+        ];
 
-        return $response;
+        return $this->renderHtml(
+            $this->response,
+            $this->templateEngine,
+            'home',
+            $data
+        );
     }
 }
