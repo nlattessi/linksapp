@@ -2,58 +2,45 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Controllers\Links;
 
+use App\Models\CategoryRepository;
 use League\Plates\Engine;
-use PDO;
 use Psr\Http\Message\ResponseInterface;
 
-class ShowFormAgregarLink
+class ShowFormAddLink
 {
+    /** @var ResponseInterface */
     private $response;
 
+    /** @var Engine */
     private $templateEngine;
 
-    /**
-     * @var PDO
-     */
-    private $db;
+    /** @var CategoryRepository */
+    private $categoryRepository;
 
     public function __construct(
         ResponseInterface $response,
         Engine $templateEngine,
-        PDO $db
+        CategoryRepository $categoryRepository
     )
     {
         $this->response = $response;
         $this->templateEngine = $templateEngine;
-        $this->db = $db;
+        $this->categoryRepository = $categoryRepository;
     }
 
     public function __invoke(): ResponseInterface
     {
-        $stmt = $this->db->prepare('SELECT name FROM categories ORDER BY name ASC');
-        $stmt->execute();
-        $categorias = array_map(function ($category) {
-            return $this->mapCategoryToSelectOption($category);
-        }, $stmt->fetchAll());
+        $categories = $this->categoryRepository->getAll();
 
         $response = $this->response->withHeader('Content-Type', 'text/html');
         $response->getBody()->write(
             $this->templateEngine->render('agregar-link', [
-                'categorias' => $categorias,
+                'categories' => $categories,
             ])
         );
 
         return $response;
-    }
-
-    private function mapCategoryToSelectOption($category)
-    {
-        $name = $category['name'];
-
-        $value = urlencode($name);
-
-        return "<option value=$value>$name</option>";
     }
 }

@@ -2,53 +2,49 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Controllers\Links;
 
+use App\Models\Link;
+use App\Models\LinkRepository;
 use League\Plates\Engine;
-use PDO;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use RuntimeException;
 
-class AgregarCategoria
+class AddLink
 {
-    /**
-     * @var ResponseInterface
-     */
+    /** @var ResponseInterface */
     private $response;
 
-    /**
-     * @var Engine
-     */
+    /** @var Engine */
     private $templateEngine;
 
-    /**
-     * @var DatabaseInterface
-     */
-    private $db;
+    /** @var LinkRepository */
+    private $linkRepository;
 
     public function __construct(
         ResponseInterface $response,
         Engine $templateEngine,
-        PDO $db
+        LinkRepository $linkRepository
     )
     {
         $this->response = $response;
         $this->templateEngine = $templateEngine;
-        $this->db = $db;
+        $this->linkRepository = $linkRepository;
     }
 
     public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
-        $body = $request->getParsedBody();
+        $data = (array)$request->getParsedBody();
 
-        if (empty($body['name'])) {
-            die('falta nombre');
+        try {
+            $link = Link::newLink($data);
+        } catch (RuntimeException $e) {
+            // TODO
+            // Hacer algo
         }
 
-        $name = $body['name'];
-        $date = Date("Y-m-d H:i:s");
-
-        $this->db->prepare('INSERT INTO categories (name, date) VALUES (?, ?)')->execute([$name, $date]);
+        $this->linkRepository->add($link);
 
         return $this->response
             ->withHeader('Location', '/')

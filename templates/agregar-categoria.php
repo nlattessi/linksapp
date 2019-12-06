@@ -11,7 +11,7 @@
             </div>
             <hr>
             <button type="submit" class="btn btn-primary">Agregar</button>
-            <a type="submit" href="<?=$HOST?>" class="btn btn-link text-info" role="button">Volver</a>
+            <a href="/" class="btn btn-link btn-sm text-info" role="button">Volver</a>
         </form>
     </div>
 </div>

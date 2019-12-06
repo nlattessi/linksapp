@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-use App\AgregarCategoria;
-use App\AgregarLink;
-use App\Categoria;
-use App\Home;
-use App\ShowFormAgregarCategoria;
-use App\ShowFormAgregarLink;
+use App\Controllers\Categories\AddCategory;
+use App\Controllers\Categories\ShowFormAddCategory;
+use App\Controllers\Home;
+use App\Controllers\Links\AddLink;
+use App\Controllers\Links\ShowFormAddLink;
 use FastRoute\RouteCollector;
 use function FastRoute\simpleDispatcher;
 
@@ -15,13 +14,11 @@ return static function () {
     $routes = simpleDispatcher(function (RouteCollector $r) {
         $r->get('/', Home::class);
 
-        $r->get('/agregar-categoria', ShowFormAgregarCategoria::class);
-        $r->post('/agregar-categoria', AgregarCategoria::class);
+        $r->get('/agregar-categoria', ShowFormAddCategory::class);
+        $r->post('/agregar-categoria', AddCategory::class);
 
-        $r->get('/categorias/{categoria}', Categoria::class);
-
-        $r->get('/agregar-link', ShowFormAgregarLink::class);
-        $r->post('/agregar-link', AgregarLink::class);
+        $r->get('/agregar-link', ShowFormAddLink::class);
+        $r->post('/agregar-link', AddLink::class);
     });
 
     return $routes;
