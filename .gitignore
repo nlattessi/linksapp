@@ -4,5 +4,5 @@
 env/
 markdown.md
 markdown.py
-#tmp/doctrine/*.*
+tmp/doctrine/*.*
 tutorial-env/
