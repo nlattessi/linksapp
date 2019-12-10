@@ -17,3 +17,4 @@ docker run --rm --interactive --tty \
 - [ ] agregar slug
 - [ ] agregar login (tomando inspiración de https://github.com/subtitulamos/subtitulamos)
 - [ ] probar de hacer tabla más linda como en video de refactor ui
+- [ ] "inspirar navbar" de aca (https://fizzbuzz.coderfoundry.com/fizzbuzz)
