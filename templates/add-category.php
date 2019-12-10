@@ -1,17 +1,20 @@
-<?php $this->layout('base') ?>
+<?php $this->layout('base', ['categories' => $categories, 'title' => 'Agregar categoría']) ?>
 
-<div class="row">
-    <div class="col">
-        <h2>Agregar categoria</h2>
-        <hr>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Agregar categoría</h1>
+    </div>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 mt-4">
         <form action="" method="post">
-            <div class="form-group">
-                <label for="name">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="desarrollo" required>
+            <div class="form-row">
+                <div class="col-10">
+                    <input type="text" class="form-control" placeholder="Nombre"
+                           name="name" required>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-outline-secondary">Agregar</button>
+                </div>
             </div>
-            <hr>
-            <button type="submit" class="btn btn-primary">Agregar</button>
-            <a href="/" class="btn btn-link btn-sm text-info" role="button">Volver</a>
         </form>
     </div>
-</div>
+</main>

@@ -9,9 +9,7 @@ use Narrowspark\HttpEmitter\SapiEmitter;
 use Relay\Relay;
 use Zend\Diactoros\ServerRequestFactory;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
-
-$settings = (require_once dirname(__DIR__) . '/config/settings.php')();
+require_once dirname(__DIR__) . '/app/bootstrap.php';
 
 // Set up dependencies
 $containerBuilder = new ContainerBuilder();

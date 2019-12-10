@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-return static function () {
+return static function (): array {
     $settings = [
         'db' => [
             'host' => 'mysql',
